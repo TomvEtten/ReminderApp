@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Reminder app</string>
+    <string name="give_reminder">Give  a reminder</string>
+</resources>

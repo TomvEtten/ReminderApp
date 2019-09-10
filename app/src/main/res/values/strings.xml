@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Reminder app</string>
     <string name="give_reminder">Give  a reminder</string>
+    <string name="title_activity_add">AddActivity</string>
+    <string name="add_yor_reminder">Add your reminder</string>
+    <string name="reminder">reminder</string>
 </resources>

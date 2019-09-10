@@ -1,5 +1,7 @@
 package hva.nl.reminderapp
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -7,7 +9,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_add.view.*
+
+const val ADD_REMINDER_REQUEST_CODE = 100
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,11 +25,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initViews()
         fab.setOnClickListener {
-            val reminder = etReminder.text.toString()
-            addReminder(reminder)
-            initViews()
+            startAddActivity()
         }
     }
+
+    private fun startAddActivity() {
+        val intent = Intent(this, AddActivity::class.java)
+        startActivityForResult(intent , ADD_REMINDER_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ADD_REMINDER_REQUEST_CODE -> {
+                    val reminder = data!!.getParcelableExtra<Reminder>(EXTRA_REMINDER)
+                    reminders.add(reminder)
+                    reminderAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+    }
+
+
 
     private fun initViews() {
         createItemTouchHelper().attachToRecyclerView(rvReminder)
@@ -37,17 +60,6 @@ class MainActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
-    }
-
-    private fun addReminder(reminder: String) {
-        if (!reminder.isNotBlank()) {
-            Snackbar.make(etReminder, "You must fill in the input field!", Snackbar.LENGTH_SHORT)
-                .show()
-            return
-        }
-        reminders.add(Reminder(reminder))
-        reminderAdapter.notifyDataSetChanged()
-        etReminder.text?.clear()
     }
 
     private fun createItemTouchHelper(): ItemTouchHelper {
@@ -74,7 +86,6 @@ class MainActivity : AppCompatActivity() {
         }
         return ItemTouchHelper(callback)
     }
-
 
 
 }

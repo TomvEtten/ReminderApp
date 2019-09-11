@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
 import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.android.synthetic.main.content_add.*
 
@@ -25,17 +24,19 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun onSaveClick() {
-        if (etAddReminder.text.toString().isNotBlank()) {
-            val reminder = Reminder(etAddReminder.text.toString())
-            val resultIntent = Intent()
-            resultIntent.putExtra(EXTRA_REMINDER, reminder)
-            setResult(Activity.RESULT_OK, resultIntent)
-            finish()
+        if (!etAddReminder.text.toString().isNotBlank()) {
+            Toast.makeText(
+                this, "The reminder cannot be empty"
+                , Toast.LENGTH_SHORT
+            ).show()
             return
         }
-        Toast.makeText(
-            this, "The reminder cannot be empty"
-            , Toast.LENGTH_SHORT
-        ).show()
+        val reminder = Reminder(etAddReminder.text.toString())
+        val resultIntent = Intent()
+        resultIntent.putExtra(EXTRA_REMINDER, reminder)
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
+        return
+
     }
 }

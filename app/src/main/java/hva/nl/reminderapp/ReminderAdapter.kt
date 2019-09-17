@@ -43,7 +43,5 @@ class ReminderAdapter(private val reminders: List<Reminder>) :
         fun bind(reminder: Reminder) {
             tvReminder.text = reminder.reminder
         }
-
     }
 }
-

@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "reminderTable")
-data class Reminder (
+data class Reminder(
 
     @ColumnInfo(name = "reminder")
     var reminder: String,

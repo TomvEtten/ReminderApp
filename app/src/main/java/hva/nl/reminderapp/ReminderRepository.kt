@@ -11,7 +11,6 @@ class ReminderRepository(context: Context) {
         reminderDao = reminderRoomDatabase!!.reminderDao()
     }
 
-
     suspend fun getAllReminders(): List<Reminder> {
         return reminderDao.getAllReminders()
     }
@@ -27,6 +26,4 @@ class ReminderRepository(context: Context) {
     suspend fun updateReminder(reminder: Reminder) {
         reminderDao.updateReminder(reminder)
     }
-
-
 }

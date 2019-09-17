@@ -28,8 +28,6 @@ abstract class ReminderRoomDatabase : RoomDatabase() {
                 ).build()
             }
             return reminderRoomDatabaseInstance
-
         }
     }
-
 }

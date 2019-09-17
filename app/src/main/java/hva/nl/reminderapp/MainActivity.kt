@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private val reminderAdapter = ReminderAdapter(reminders)
     private lateinit var reminderRepository: ReminderRepository
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             getRemindersFromDatabase()
         }
     }
-
 
     private fun initViews() {
         getRemindersFromDatabase()
@@ -105,5 +103,4 @@ class MainActivity : AppCompatActivity() {
         }
         return ItemTouchHelper(callback)
     }
-
 }

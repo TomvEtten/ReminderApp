@@ -26,8 +26,7 @@ class AddActivity : AppCompatActivity() {
     private fun onSaveClick() {
         if (!etAddReminder.text.toString().isNotBlank()) {
             Toast.makeText(
-                this, "The reminder cannot be empty"
-                , Toast.LENGTH_SHORT
+                this, "The reminder cannot be empty", Toast.LENGTH_SHORT
             ).show()
             return
         }
@@ -37,6 +36,5 @@ class AddActivity : AppCompatActivity() {
         setResult(Activity.RESULT_OK, resultIntent)
         finish()
         return
-
     }
 }

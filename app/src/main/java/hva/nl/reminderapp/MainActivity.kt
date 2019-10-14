@@ -18,7 +18,7 @@ const val ADD_REMINDER_REQUEST_CODE = 100
 
 class MainActivity : AppCompatActivity() {
 
-    private val reminders = arrayListOf<Reminder>()
+    private var reminders = arrayListOf<Reminder>()
     private val reminderAdapter = ReminderAdapter(reminders)
     private lateinit var reminderRepository: ReminderRepository
 
@@ -65,14 +65,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getRemindersFromDatabase() {
+        reminders.clear()
         CoroutineScope(Dispatchers.Main).launch {
-            val reminders = withContext(Dispatchers.IO) {
-                reminderRepository.getAllReminders()
+            withContext(Dispatchers.IO) {
+                reminders.addAll(reminderRepository.getAllReminders())
             }
+        }.invokeOnCompletion {
+            reminderAdapter.notifyDataSetChanged()
         }
-        this@MainActivity.reminders.clear()
-        this@MainActivity.reminders.addAll(reminders)
-        reminderAdapter.notifyDataSetChanged()
     }
 
     private fun createItemTouchHelper(): ItemTouchHelper {
@@ -97,8 +97,10 @@ class MainActivity : AppCompatActivity() {
                     withContext(Dispatchers.IO) {
                         reminderRepository.deleteReminder(reminders[position])
                     }
+                }.invokeOnCompletion {
+                    getRemindersFromDatabase()
                 }
-                getRemindersFromDatabase()
+
             }
         }
         return ItemTouchHelper(callback)
